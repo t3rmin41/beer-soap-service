@@ -1,0 +1,21 @@
+spring:
+    main:
+        show_banner: off
+    application:
+        name: beer-service
+    profiles:
+        active: local-dev
+
+---
+
+spring:
+    profiles: local-dev
+server:
+    port: 8080
+
+---
+
+spring:
+    profiles: prod
+server:
+    port: 8080

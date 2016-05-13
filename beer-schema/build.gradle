@@ -1,0 +1,83 @@
+// Base plugin for task rule "clean <task>"
+apply plugin: 'base'
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+//Configuration for CXF dependencies.
+configurations { 
+    cxf
+}
+
+ext {
+    // CXF version.
+    cxfVersion = '3.1.6'
+
+    // Artifacts for CXF dependency.
+    cxfArtifacts = [
+        'cxf-tools-wsdlto-frontend-jaxws', 
+        'cxf-tools-wsdlto-databinding-jaxb', 
+        'cxf-tools-common', 
+        'cxf-tools-wsdlto-core'
+    ]
+}
+
+dependencies {
+    // Assign CXF dependencies to configuration.
+    cxfArtifacts.each { artifact ->
+        cxf "org.apache.cxf:$artifact:$cxfVersion"
+    }
+}
+
+//Clean previously generated sources
+task cleanWsdlGeneratedContract(type: Delete){
+    delete fileTree("${projectDir}/wsdl-generated") {
+        include '**/*.*'
+    }
+}
+
+// Custom task to generate Java classes from WSDL
+task wsdl2java(type: JavaExec) {
+    dependsOn cleanWsdlGeneratedContract
+    ext {
+        wsdlFile = 'src/main/resources/contracts/wsdl/beer-wsdl.wsdl'
+        outputDir = file("${projectDir}/wsdl-generated/src/main/java")
+    }
+
+    inputs.file file(wsdlFile)
+    outputs.dir outputDir
+
+    // Main Java class to invoke.
+    main = 'org.apache.cxf.tools.wsdlto.WSDLToJava'
+
+    // Set classpath to dependencies assigned
+    // to the cxf configuration.
+    classpath = configurations.cxf
+
+    // Arguments to be passed to WSDLToJava.
+    args '-d', outputDir
+    args '-encoding', 'UTF-8'
+    //args '-verbose'
+    args wsdlFile
+}
+
+//Create main jar START
+compileJava {
+    dependsOn wsdl2java
+    source = file("${projectDir}/wsdl-generated/src/main/java")
+    classpath = files("${projectDir}/wsdl-generated/src/main/java")
+    destinationDir = file("${buildDir}/wsdl-generated/classes")
+    dependencyCacheDir = file("${buildDir}/wsdl-generated/dependency-cache")
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+jar {
+    baseName = 'beer-contract'
+    version = '0.0.1-SNAPSHOT'
+    exclude ("contracts/**") from ("src/main/resources")
+    from ("${buildDir}/wsdl-generated/classes")
+}
+//Create main jar END

@@ -1,0 +1,11 @@
+#Eclipse
+.settings/
+.project
+.classpath
+#Gradle
+.gradle/
+build/
+/bin/
+#Common
+*log/
+wsdl-generated/

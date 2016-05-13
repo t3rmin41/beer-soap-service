@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="LocalDevLogLevel" value="INFO" />
+    <property name="ProdLogLevel" value="WARN" />
+
+    <property name="prod-log-dir" value="./external-dummy-requestor" />
+    <property name="dev-log-dir" value="./logs" />
+
+    <property name="COMMON_LOG_PATTERN" value="%-30([%thread]) %-5level - %logger{32} - %msg%n"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS 'UTC'", UTC} ${COMMON_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SIFTPRODSYSLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator class="com.memorynotfound.discriminator.UniqueIdDiscriminator" />
+        <sift>
+            <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>${prod-log-dir}/${serviceInstanceId}/sys.log</file>
+                <append>false</append>
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS 'UTC'", UTC} ${COMMON_LOG_PATTERN} %-5level %m%n</pattern>
+                </layout>
+                
+                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                    <FileNamePattern>${prod-log-dir}/${serviceInstanceId}/sys.%i.log.zip</FileNamePattern>
+                    <MinIndex>1</MinIndex>
+                    <MaxIndex>10</MaxIndex>
+                </rollingPolicy>
+ 
+                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </triggeringPolicy>
+            </appender>
+        </sift>
+    </appender>
+
+    <appender name="SIFTDEVSYSLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>serviceInstanceId</key>
+            <defaultValue>default</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>${dev-log-dir}/${serviceInstanceId}/sys.log</file>
+                <append>false</append>
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS 'UTC'", UTC} ${COMMON_LOG_PATTERN} %-5level %m%n</pattern>
+                </layout>
+                
+                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                    <FileNamePattern>${dev-log-dir}/${serviceInstanceId}/sys.%i.log.zip</FileNamePattern>
+                    <MinIndex>1</MinIndex>
+                    <MaxIndex>10</MaxIndex>
+                </rollingPolicy>
+ 
+                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </triggeringPolicy>
+            </appender>
+        </sift>
+    </appender>
+
+    <!--DEVELOPMENT logger-->
+    <springProfile name="local-dev">
+        <root level="${LocalDevLogLevel}" additivity="false">
+            <appender-ref ref="SIFTDEVSYSLOG" />
+            <appender-ref ref="console" />
+        </root>
+    </springProfile>
+
+    <!--PRODUCTION logger-->
+    <springProfile name="prod">
+        <root level="${ProdLogLevel}" additivity="false">
+            <appender-ref ref="SIFTPRODSYSLOG" />
+            <appender-ref ref="console" />
+        </root>
+    </springProfile>
+
+</configuration>
