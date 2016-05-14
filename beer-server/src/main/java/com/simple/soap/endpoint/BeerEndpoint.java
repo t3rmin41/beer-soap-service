@@ -1,10 +1,10 @@
-package com.memorynotfound.endpoint;
+package com.simple.soap.endpoint;
 
-import com.memorynotfound.beer.Beer;
-import com.memorynotfound.beer.BeerRequest;
-import com.memorynotfound.beer.BeerResponse;
-import com.memorynotfound.beer.BeerService;
-import com.memorynotfound.beer.ObjectFactory;
+import com.soap.simple.beer.Beer;
+import com.soap.simple.beer.BeerRequest;
+import com.soap.simple.beer.BeerResponse;
+import com.soap.simple.beer.BeerService;
+import com.soap.simple.beer.ObjectFactory;
 
 public class BeerEndpoint implements BeerService {
 

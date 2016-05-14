@@ -1,4 +1,4 @@
-package com.memorynotfound.discriminator;
+package com.simple.soap.discriminator;
 
 import ch.qos.logback.core.sift.Discriminator;
 import ch.qos.logback.core.spi.DeferredProcessingAware;

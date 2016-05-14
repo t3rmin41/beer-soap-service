@@ -1,4 +1,4 @@
-package com.memorynotfound.discriminator;
+package com.simple.soap.discriminator;
 
 import java.util.UUID;
 

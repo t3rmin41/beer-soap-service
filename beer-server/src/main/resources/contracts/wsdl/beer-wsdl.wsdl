@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-    xmlns:tns="http://memorynotfound.com/beer"
-    targetNamespace="http://memorynotfound.com/beer">
+    xmlns:tns="http://simple.soap.com/beer"
+    targetNamespace="http://simple.soap.com/beer">
     <wsdl:types>
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
             attributeFormDefault="unqualified" 
             elementFormDefault="qualified">
             <xs:import
-                namespace="http://memorynotfound.com/beer"
+                namespace="http://simple.soap.com/beer"
                 schemaLocation="../xsd/beer.xsd"></xs:import>
         </xs:schema>
     </wsdl:types>
@@ -48,7 +48,7 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="LocalBeerService">
+    <wsdl:service name="BeerService">
         <wsdl:port 
             binding="tns:BeerServiceSoap11" 
             name="BeerServiceSoap11">

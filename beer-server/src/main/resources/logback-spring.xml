@@ -16,7 +16,7 @@
     </appender>
 
     <appender name="SIFTPRODSYSLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator class="com.memorynotfound.discriminator.UniqueIdDiscriminator" />
+        <discriminator class="com.simple.soap.discriminator.UniqueIdDiscriminator" />
         <sift>
             <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>${prod-log-dir}/${serviceInstanceId}/sys.log</file>

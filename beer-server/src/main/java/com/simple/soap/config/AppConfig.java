@@ -1,4 +1,4 @@
-package com.memorynotfound.config;
+package com.simple.soap.config;
 
 import javax.xml.ws.Endpoint;
 
@@ -13,22 +13,26 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.apache.cxf.transport.servlet.CXFServlet;
 
-import com.memorynotfound.beer.BeerService;
-import com.memorynotfound.endpoint.BeerEndpoint;
+import com.simple.soap.authentication.BasicAuthAuthorizationInterceptor;
+import com.simple.soap.endpoint.BeerEndpoint;
+import com.soap.simple.beer.BeerService;
 
 @EnableWs
 @Configuration
-@ComponentScan(basePackages = {"com.memorynotfound.endpoint"})
+@ComponentScan(basePackages = {"com.simple.soap.endpoint"})
 public class AppConfig {
 
     @Bean
-    public ServletRegistrationBean messageDispatcherServlet(ApplicationContext appContext){
-        return new ServletRegistrationBean(new CXFServlet(), "/ws/*");
+    public ServletRegistrationBean messageDispatcherServlet(ApplicationContext appContext) {
+        CXFServlet cxfServlet = new CXFServlet();
+        return new ServletRegistrationBean(cxfServlet, "/ws/*");
     }
 
     @Bean(name=Bus.DEFAULT_BUS_ID)
     public SpringBus springBus() {
-        return new SpringBus();
+        SpringBus springBus = new SpringBus();
+        springBus.getInInterceptors().add(new BasicAuthAuthorizationInterceptor());
+        return springBus;
     }
 
     @Bean
