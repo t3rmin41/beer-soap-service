@@ -6,6 +6,8 @@
 .gradle/
 build/
 /bin/
+#SpringBeans
+.springBeans
 #Common
 *log/
 *logs/

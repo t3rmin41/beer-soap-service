@@ -42,9 +42,12 @@ public class AppConfig {
     
     @Bean
     public Endpoint endpoint() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), beerService());
-        endpoint.publish("/beerservice");
-        endpoint.setWsdlLocation("src/main/resources/contracts/wsdl/beer-wsdl.wsdl");
+        EndpointImpl endpoint = new EndpointImpl(springBus());
+        Endpoint.publish("/beerservice", beerService());
+        // add as much webservices as you need by Endpoint.publish("webserviceurl", implementation());
+        // all webservices will be available at http://host:port/ws/webserviceurl
+        // no WSDL needed since cxf generates interface to implement for webservice
+        // path "/ws/*" is defined in CXFServlet where list of available webservices can be seen
         return endpoint;
     }
 }
