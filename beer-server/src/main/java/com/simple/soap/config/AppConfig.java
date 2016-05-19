@@ -48,6 +48,7 @@ public class AppConfig {
         // all webservices will be available at http://host:port/ws/webserviceurl
         // no WSDL needed since cxf generates interface to implement for webservice
         // path "/ws/*" is defined in CXFServlet where list of available webservices can be seen
+        // Keep in mind that in WSDL soap:address location=... is exactly where webservice is
         return endpoint;
     }
 }

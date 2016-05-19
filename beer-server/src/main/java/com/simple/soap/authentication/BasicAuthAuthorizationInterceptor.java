@@ -13,17 +13,21 @@ import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.phase.Phase;
 import org.apache.cxf.transport.Conduit;
 import org.apache.cxf.ws.addressing.EndpointReferenceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BasicAuthAuthorizationInterceptor extends SoapHeaderInterceptor {
+public class BasicAuthAuthorizationInterceptor extends AbstractPhaseInterceptor<Message> {
 
     private static Logger log = LoggerFactory.getLogger(BasicAuthAuthorizationInterceptor.class);
     
-    
-    
+    public BasicAuthAuthorizationInterceptor() {
+        super(Phase.PRE_PROTOCOL);
+    }
+
     @Override
     public void handleMessage(Message message) throws Fault {
 

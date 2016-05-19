@@ -7,21 +7,15 @@
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
             attributeFormDefault="unqualified" 
             elementFormDefault="qualified">
-            <xs:import
-                namespace="http://simple.soap.com/beer"
-                schemaLocation="../xsd/beer.xsd"></xs:import>
+            <xs:import namespace="http://simple.soap.com/beer" schemaLocation="../xsd/beer.xsd"></xs:import>
         </xs:schema>
     </wsdl:types>
     <wsdl:message name="BeerResponse">
-        <wsdl:part 
-            element="tns:BeerResponse" 
-            name="BeerResponse">
+        <wsdl:part  element="tns:BeerResponse" name="BeerResponse">
         </wsdl:part>
     </wsdl:message>
     <wsdl:message name="BeerRequest">
-        <wsdl:part 
-            element="tns:BeerRequest" 
-            name="BeerRequest">
+        <wsdl:part element="tns:BeerRequest" name="BeerRequest">
         </wsdl:part>
     </wsdl:message>
     <wsdl:portType name="BeerService">
@@ -32,9 +26,7 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding 
-        name="BeerServiceSoap11" 
-        type="tns:BeerService">
+    <wsdl:binding name="BeerServiceSoap11" type="tns:BeerService">
         <soap:binding 
             style="document"
             transport="http://schemas.xmlsoap.org/soap/http" />
@@ -49,11 +41,8 @@
         </wsdl:operation>
     </wsdl:binding>
     <wsdl:service name="BeerService">
-        <wsdl:port 
-            binding="tns:BeerServiceSoap11" 
-            name="BeerServiceSoap11">
-            <soap:address 
-                location="http://localhost:8080/ws/beerservice" />
+        <wsdl:port binding="tns:BeerServiceSoap11" name="BeerServiceSoap11">
+            <soap:address location="http://localhost:8080/ws/beerservice" />
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
