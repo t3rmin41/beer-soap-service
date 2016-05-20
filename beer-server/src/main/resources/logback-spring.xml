@@ -22,7 +22,7 @@
                 <file>${prod-log-dir}/${serviceInstanceId}/sys.log</file>
                 <append>false</append>
                 <layout class="ch.qos.logback.classic.PatternLayout">
-                    <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS 'UTC'", UTC} ${COMMON_LOG_PATTERN} %-5level %m%n</pattern>
+                    <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS 'UTC'", UTC} ${COMMON_LOG_PATTERN}</pattern>
                 </layout>
                 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
@@ -48,7 +48,7 @@
                 <file>${dev-log-dir}/${serviceInstanceId}/sys.log</file>
                 <append>false</append>
                 <layout class="ch.qos.logback.classic.PatternLayout">
-                    <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS 'UTC'", UTC} ${COMMON_LOG_PATTERN} %-5level %m%n</pattern>
+                    <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS 'UTC'", UTC} ${COMMON_LOG_PATTERN}</pattern>
                 </layout>
                 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">

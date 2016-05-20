@@ -1,11 +1,14 @@
 package com.simple.soap.endpoint;
 
+import org.springframework.stereotype.Component;
+
 import com.soap.simple.beer.Beer;
 import com.soap.simple.beer.BeerRequest;
 import com.soap.simple.beer.BeerResponse;
 import com.soap.simple.beer.BeerService;
 import com.soap.simple.beer.ObjectFactory;
 
+@Component
 public class BeerEndpoint implements BeerService {
 
     private ObjectFactory factory = new ObjectFactory();
