@@ -36,13 +36,26 @@ task cleanWsdlGeneratedContract(type: Delete){
     delete fileTree("${projectDir}/generated") {
         include '**/*.*'
     }
+    delete fileTree("${projectDir}/src/main/resources/contracts/beer") {
+        include '*/*.*'
+        exclude "beer-schema-archive.zip"
+    }
+}
+
+//Unzip
+task unzipWebServiceContract(type: Copy){
+    dependsOn cleanWsdlGeneratedContract
+    def zipFile = file("${projectDir}/src/main/resources/contracts/beer/beer-schema-archive.zip")
+    def outputZipDir = file("${projectDir}/src/main/resources/contracts/beer/")
+    from zipTree(zipFile)
+    into outputZipDir
 }
 
 // Custom task to generate Java classes from WSDL
 task wsdl2java(type: JavaExec) {
-    dependsOn cleanWsdlGeneratedContract
+    dependsOn unzipWebServiceContract
     ext {
-        wsdlFile = 'src/main/resources/contracts/wsdl/beer-wsdl.wsdl'
+        wsdlFile = 'src/main/resources/contracts/beer/wsdl/beer-wsdl.wsdl'
         outputDir = file("${projectDir}/generated/src/main/java")
     }
 
