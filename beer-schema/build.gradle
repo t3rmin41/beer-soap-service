@@ -33,7 +33,7 @@ dependencies {
 
 //Clean previously generated sources
 task cleanWsdlGeneratedContract(type: Delete){
-    delete fileTree("${projectDir}/wsdl-generated") {
+    delete fileTree("${projectDir}/generated") {
         include '**/*.*'
     }
 }
@@ -43,7 +43,7 @@ task wsdl2java(type: JavaExec) {
     dependsOn cleanWsdlGeneratedContract
     ext {
         wsdlFile = 'src/main/resources/contracts/wsdl/beer-wsdl.wsdl'
-        outputDir = file("${projectDir}/wsdl-generated/src/main/java")
+        outputDir = file("${projectDir}/generated/src/main/java")
     }
 
     inputs.file file(wsdlFile)
@@ -66,10 +66,10 @@ task wsdl2java(type: JavaExec) {
 //Create main jar START
 compileJava {
     dependsOn wsdl2java
-    source = file("${projectDir}/wsdl-generated/src/main/java")
-    classpath = files("${projectDir}/wsdl-generated/src/main/java")
-    destinationDir = file("${buildDir}/wsdl-generated/classes")
-    dependencyCacheDir = file("${buildDir}/wsdl-generated/dependency-cache")
+    source = file("${projectDir}/generated/src/main/java")
+    classpath = files("${projectDir}/generated/src/main/java")
+    destinationDir = file("${buildDir}/generated/classes")
+    dependencyCacheDir = file("${buildDir}/generated/dependency-cache")
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
 }
@@ -78,6 +78,6 @@ jar {
     baseName = 'beer-contract'
     version = '0.0.1-SNAPSHOT'
     exclude ("contracts/**") from ("src/main/resources")
-    from ("${buildDir}/wsdl-generated/classes")
+    from ("${buildDir}/generated/classes")
 }
 //Create main jar END
