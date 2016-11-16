@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.simple.soap.config.ActiveMqConfig;
 
+//This class not annotated with @Component because it's already added as a @Bean in ActiveMqConfig.java
 public class SimpleQueueRequestSenderImpl implements SimpleQueueRequestSender {
 
   private static final Logger log = LoggerFactory.getLogger(SimpleQueueRequestSenderImpl.class);
