@@ -16,7 +16,7 @@ import org.apache.cxf.transport.servlet.CXFServlet;
 import com.soap.simple.beer.BeerService;
 
 @Configuration
-@ComponentScan(basePackages = {"com.simple.soap.endpoint"})
+@ComponentScan(basePackages = {"com.simple.soap.endpoint", "com.simple.soap.repository", "com.simple.soap.jms"})
 public class AppConfig {
 
 	@Autowired

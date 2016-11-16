@@ -7,10 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 
+import com.simple.soap.config.ActiveMqConfig;
 import com.simple.soap.config.AppConfig;
 
 @SpringBootApplication
-@Import({AppConfig.class})
+@Import({AppConfig.class, ActiveMqConfig.class})
 public class BeerApplication {
 
     private static Logger log = LoggerFactory.getLogger(BeerApplication.class);
